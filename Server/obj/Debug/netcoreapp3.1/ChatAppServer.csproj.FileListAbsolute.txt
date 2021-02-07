@@ -1,0 +1,12 @@
+C:\Users\djmay\source\repos\ChatApp\Server\bin\Debug\netcoreapp3.1\ChatAppServer.exe
+C:\Users\djmay\source\repos\ChatApp\Server\bin\Debug\netcoreapp3.1\ChatAppServer.deps.json
+C:\Users\djmay\source\repos\ChatApp\Server\bin\Debug\netcoreapp3.1\ChatAppServer.runtimeconfig.json
+C:\Users\djmay\source\repos\ChatApp\Server\bin\Debug\netcoreapp3.1\ChatAppServer.runtimeconfig.dev.json
+C:\Users\djmay\source\repos\ChatApp\Server\bin\Debug\netcoreapp3.1\ChatAppServer.dll
+C:\Users\djmay\source\repos\ChatApp\Server\bin\Debug\netcoreapp3.1\ChatAppServer.pdb
+C:\Users\djmay\source\repos\ChatApp\Server\obj\Debug\netcoreapp3.1\ChatAppServer.AssemblyInfoInputs.cache
+C:\Users\djmay\source\repos\ChatApp\Server\obj\Debug\netcoreapp3.1\ChatAppServer.AssemblyInfo.cs
+C:\Users\djmay\source\repos\ChatApp\Server\obj\Debug\netcoreapp3.1\ChatAppServer.csproj.CoreCompileInputs.cache
+C:\Users\djmay\source\repos\ChatApp\Server\obj\Debug\netcoreapp3.1\ChatAppServer.dll
+C:\Users\djmay\source\repos\ChatApp\Server\obj\Debug\netcoreapp3.1\ChatAppServer.pdb
+C:\Users\djmay\source\repos\ChatApp\Server\obj\Debug\netcoreapp3.1\ChatAppServer.genruntimeconfig.cache
