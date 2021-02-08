@@ -1,24 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-public class ClientSend
+namespace ChatAppClient
 {
-    private static void SendTCPData(Packet _packet)
+    public class ClientSend
     {
-        _packet.WriteLength();
-        Client.instance.tcp.SendData(_packet);
-    }
-
-    #region Packets
-    public static void Message()
-    {
-        using (Packet _packet = new Packet((int)ClientPackets.welcomeReceived))
+        private static void SendTCPData(Packet _packet)
         {
-            _packet.Write(Client.instance.myId);
-            //_packet.Write(UIManager.instance.usernameField.text);
-
-            SendTCPData(_packet);
+            _packet.WriteLength();
+            Client.tcp.SendData(_packet);
         }
+
+        #region Packets
+        public static void Message()
+        {
+            using (Packet _packet = new Packet((int)ClientPackets.messageReceieved))
+            {
+                _packet.Write(Client.myId);
+                _packet.Write(Form1.usernameField);
+
+                SendTCPData(_packet);
+            }
+        }
+        #endregion
     }
-    #endregion
 }

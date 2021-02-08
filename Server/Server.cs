@@ -58,7 +58,7 @@ namespace ChatAppServer
 
             packetHandlers = new Dictionary<int, PacketHandler>()
             {
-                { (int)ClientPackets.message, ServerHandle.WelcomeReceieved },
+                { (int)ClientPackets.messageReceieved, ServerHandle.WelcomeReceieved },
             };
             Console.WriteLine("Initialized packets.");
         }

@@ -1,0 +1,11 @@
+C:\Users\s210119\Desktop\GitProjects\ChatApp\ChatAppClient\bin\Debug\ChatAppClient.exe.config
+C:\Users\s210119\Desktop\GitProjects\ChatApp\ChatAppClient\bin\Debug\ChatAppClient.exe
+C:\Users\s210119\Desktop\GitProjects\ChatApp\ChatAppClient\bin\Debug\ChatAppClient.pdb
+C:\Users\s210119\Desktop\GitProjects\ChatApp\ChatAppClient\obj\Debug\ChatAppClient.csprojAssemblyReference.cache
+C:\Users\s210119\Desktop\GitProjects\ChatApp\ChatAppClient\obj\Debug\ChatAppClient.Properties.Resources.resources
+C:\Users\s210119\Desktop\GitProjects\ChatApp\ChatAppClient\obj\Debug\ChatAppClient.csproj.GenerateResource.cache
+C:\Users\s210119\Desktop\GitProjects\ChatApp\ChatAppClient\obj\Debug\ChatAppClient.exe
+C:\Users\s210119\Desktop\GitProjects\ChatApp\ChatAppClient\obj\Debug\ChatAppClient.pdb
+C:\Users\s210119\Desktop\GitProjects\ChatApp\ChatAppClient\obj\Debug\ChatAppClient.Form1.resources
+C:\Users\s210119\Desktop\GitProjects\ChatApp\ChatAppClient\bin\Debug\Microsoft.VisualStudio.DebuggerVisualizers.dll
+C:\Users\s210119\Desktop\GitProjects\ChatApp\ChatAppClient\obj\Debug\ChatAppClient.csproj.CopyComplete

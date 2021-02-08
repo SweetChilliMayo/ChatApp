@@ -3,156 +3,116 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System;
+using System.Windows.Forms;
 
-public class Client
+namespace ChatAppClient
 {
-    public static Client instance;
-    public static int dataBufferSize = 4096;
-
-    public string ip = "127.0.0.1";
-    public int port = 26950;
-    public int myId = 0;
-    public TCP tcp;
-
-    private bool isConnected = false;
-    private delegate void PacketHandler(Packet _packet);
-    private static Dictionary<int, PacketHandler> packetHandlers;
-
-    private void Awake()
+    public class Client
     {
-        if (instance == null)
+        public static int dataBufferSize = 4096;
+
+        public static string ip = "127.0.0.1";
+        public static int port = 26950;
+        public static int myId = 0;
+        public static TCP tcp;
+
+        public static bool isConnected = false;
+        private delegate void PacketHandler(Packet _packet);
+        private static Dictionary<int, PacketHandler> packetHandlers;
+
+        public static void ConnectToServer()
         {
-            instance = this;
+            tcp = new TCP();
+
+            InitializeClientData();
+
+            isConnected = true;
+            tcp.Connect();
+
+            Form1.Instance.Connected();
         }
-        else if (instance != this)
+
+        public class TCP
         {
-            Console.WriteLine("Instance already exists");
-        }
-    }
+            public TcpClient socket;
 
-    private void OnApplicationQuit()
-    {
-        Disconnect();
-    }
+            private NetworkStream stream;
+            private Packet receievedData;
+            private byte[] receieveBuffer;
 
-    public void ConnectToServer()
-    {
-        //if (UIManager.instance.ipField.text != "")
-        //{
-        //    ip = UIManager.instance.ipField.text;
-        //}
-
-        tcp = new TCP();
-
-        InitializeClientData();
-
-        isConnected = true;
-        tcp.Connect();
-    }
-
-    public class TCP
-    {
-        public TcpClient socket;
-
-        private NetworkStream stream;
-        private Packet receievedData;
-        private byte[] receieveBuffer;
-
-        public void Connect()
-        {
-            socket = new TcpClient
+            public void Connect()
             {
-                ReceiveBufferSize = dataBufferSize,
-                SendBufferSize = dataBufferSize
-            };
-
-            receieveBuffer = new byte[dataBufferSize];
-            socket.BeginConnect(instance.ip, instance.port, ConnectCallback, socket);
-        }
-
-        private void ConnectCallback(IAsyncResult _result)
-        {
-            socket.EndConnect(_result);
-
-            if (!socket.Connected)
-            {
-                return;
-            }
-
-            stream = socket.GetStream();
-
-            receievedData = new Packet();
-
-            stream.BeginRead(receieveBuffer, 0, dataBufferSize, ReceieveCallback, null);
-        }
-
-        public void SendData(Packet _packet)
-        {
-            try
-            {
-                if (socket != null)
+                socket = new TcpClient
                 {
-                    stream.BeginWrite(_packet.ToArray(), 0, _packet.Length(), null, null);
-                }
-            }
-            catch (Exception _ex)
-            {
-                Console.WriteLine($"Error sending data to server via TCP: {_ex}");
-            }
-        }
+                    ReceiveBufferSize = dataBufferSize,
+                    SendBufferSize = dataBufferSize
+                };
 
-        private void ReceieveCallback(IAsyncResult _result)
-        {
-            try
+                receieveBuffer = new byte[dataBufferSize];
+                socket.BeginConnect(ip, port, ConnectCallback, socket);
+            }
+
+            private void ConnectCallback(IAsyncResult _result)
             {
-                int _byteLength = stream.EndRead(_result);
-                if (_byteLength <= 0)
+                socket.EndConnect(_result);
+
+                if (!socket.Connected)
                 {
-                    instance.Disconnect();
                     return;
                 }
 
-                byte[] _data = new byte[_byteLength];
-                Array.Copy(receieveBuffer, _data, _byteLength);
+                stream = socket.GetStream();
 
-                receievedData.Reset(HandleData(_data));
+                receievedData = new Packet();
+
                 stream.BeginRead(receieveBuffer, 0, dataBufferSize, ReceieveCallback, null);
             }
-            catch (Exception _ex)
+
+            public void SendData(Packet _packet)
             {
-                Console.WriteLine($"Error recieving TCP data: {_ex}");
-                Disconnect();
-            }
-        }
-
-        private bool HandleData(byte[] _data)
-        {
-            int _packetLength = 0;
-
-            receievedData.SetBytes(_data);
-
-            if (receievedData.UnreadLength() >= 4)
-            {
-                _packetLength = receievedData.ReadInt();
-                if (_packetLength <= 0)
+                try
                 {
-                    return true;
+                    if (socket != null)
+                    {
+                        stream.BeginWrite(_packet.ToArray(), 0, _packet.Length(), null, null);
+                    }
+                }
+                catch (Exception _ex)
+                {
+                    Console.WriteLine($"Error sending data to server via TCP: {_ex}");
                 }
             }
 
-            while (_packetLength > 0 && _packetLength <= receievedData.UnreadLength())
+            private void ReceieveCallback(IAsyncResult _result)
             {
-                byte[] _packetBytes = receievedData.ReadBytes(_packetLength);
-                ThreadManager.ExecuteOnMainThread(() =>
+                try
                 {
-                    using (Packet _packet = new Packet(_packetBytes))
+                    int _byteLength = stream.EndRead(_result);
+                    if (_byteLength <= 0)
                     {
-                        int _packetId = _packet.ReadInt();
-                        packetHandlers[_packetId](_packet);
+                        Client.Disconnect();
+                        return;
                     }
-                });
 
-                _packetLength = 0;
+                    byte[] _data = new byte[_byteLength];
+                    Array.Copy(receieveBuffer, _data, _byteLength);
+
+                    receievedData.Reset(HandleData(_data));
+                    stream.BeginRead(receieveBuffer, 0, dataBufferSize, ReceieveCallback, null);
+                }
+                catch (Exception _ex)
+                {
+                    Console.WriteLine($"Error recieving TCP data: {_ex}");
+                    Disconnect();
+                }
+            }
+
+            private bool HandleData(byte[] _data)
+            {
+                int _packetLength = 0;
+
+                receievedData.SetBytes(_data);
+
                 if (receievedData.UnreadLength() >= 4)
                 {
                     _packetLength = receievedData.ReadInt();
@@ -161,44 +121,69 @@ public class Client
                         return true;
                     }
                 }
+
+                while (_packetLength > 0 && _packetLength <= receievedData.UnreadLength())
+                {
+                    byte[] _packetBytes = receievedData.ReadBytes(_packetLength);
+                    ThreadManager.ExecuteOnMainThread(() =>
+                    {
+                        using (Packet _packet = new Packet(_packetBytes))
+                        {
+                            int _packetId = _packet.ReadInt();
+                            packetHandlers[_packetId](_packet);
+                        }
+                    });
+
+                    _packetLength = 0;
+                    if (receievedData.UnreadLength() >= 4)
+                    {
+                        _packetLength = receievedData.ReadInt();
+                        if (_packetLength <= 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                if (_packetLength <= 1)
+                {
+                    return true;
+                }
+
+                return false;
             }
 
-            if (_packetLength <= 1)
+            private void Disconnect()
             {
-                return true;
+                Client.Disconnect();
+
+                stream = null;
+                receievedData = null;
+                receieveBuffer = null;
+                socket = null;
             }
-
-            return false;
         }
 
-        private void Disconnect()
+        private static void InitializeClientData()
         {
-            instance.Disconnect();
-
-            stream = null;
-            receievedData = null;
-            receieveBuffer = null;
-            socket = null;
-        }
-    }
-
-    private void InitializeClientData()
-    {
-        packetHandlers = new Dictionary<int, PacketHandler>()
+            packetHandlers = new Dictionary<int, PacketHandler>()
         {
-            { (int)ServerPackets.welcome, ClientHandle.Welcome },
+            { (int)ServerPackets.message, ClientHandle.Message },
         };
-        Console.WriteLine("Initialized packets.");
-    }
+            Console.WriteLine("Initialized packets.");
+        }
 
-    private void Disconnect()
-    {
-        if (isConnected)
+        public static void Disconnect()
         {
-            isConnected = false;
-            tcp.socket.Close();
+            if (isConnected)
+            {
+                isConnected = false;
+                tcp.socket.Close();
 
-            Console.WriteLine("Disconnected from server.");
+                Form1.Instance.Disconnected();
+
+                Console.WriteLine("Disconnected from server.");
+            }
         }
     }
 }

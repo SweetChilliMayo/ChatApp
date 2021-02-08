@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Net;
 using System;
 
-public class ClientHandle
+namespace ChatAppClient
 {
-    public static void Welcome(Packet _packet)
+    public class ClientHandle
     {
-        string _msg = _packet.ReadString();
-        int _myId = _packet.ReadInt();
+        public static void Message(Packet _packet)
+        {
+            string _msg = _packet.ReadString();
+            int _myId = _packet.ReadInt();
 
-        Console.WriteLine($"Message from server: {_msg}");
-        Client.instance.myId = _myId;
-        ClientSend.Message();
+            Console.WriteLine($"Message from server: {_msg}");
+            Client.myId = _myId;
+            ClientSend.Message();
+        }
     }
 }

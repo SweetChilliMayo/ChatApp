@@ -14,7 +14,7 @@ namespace ChatAppServer
     /// <summary>Sent from client to server.</summary>
     public enum ClientPackets
     {
-        message = 1,
+        messageReceieved = 1,
     }
 
     public class Packet : IDisposable

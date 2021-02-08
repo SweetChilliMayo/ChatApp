@@ -41,6 +41,8 @@ namespace ChatAppServer
                 _packet.Write(_msg);
                 _packet.Write(_fromClient);
 
+                Console.WriteLine($"Sending message: {_msg}");
+
                 SendTCPDataToAll(_fromClient, _packet);
             }
         }
