@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\djmay\\Desktop\\GitProjects\\ChatApp\\Server\\ChatAppServer.csproj": {}
+    "C:\\Users\\s210119\\Desktop\\GitProjects\\ChatApp\\Server\\ChatAppServer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\djmay\\Desktop\\GitProjects\\ChatApp\\Server\\ChatAppServer.csproj": {
+    "C:\\Users\\s210119\\Desktop\\GitProjects\\ChatApp\\Server\\ChatAppServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\djmay\\Desktop\\GitProjects\\ChatApp\\Server\\ChatAppServer.csproj",
+        "projectUniqueName": "C:\\Users\\s210119\\Desktop\\GitProjects\\ChatApp\\Server\\ChatAppServer.csproj",
         "projectName": "ChatAppServer",
-        "projectPath": "C:\\Users\\djmay\\Desktop\\GitProjects\\ChatApp\\Server\\ChatAppServer.csproj",
-        "packagesPath": "C:\\Users\\djmay\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\djmay\\Desktop\\GitProjects\\ChatApp\\Server\\obj\\",
+        "projectPath": "C:\\Users\\s210119\\Desktop\\GitProjects\\ChatApp\\Server\\ChatAppServer.csproj",
+        "packagesPath": "C:\\Users\\s210119\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\s210119\\Desktop\\GitProjects\\ChatApp\\Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\djmay\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\s210119\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -52,7 +52,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
